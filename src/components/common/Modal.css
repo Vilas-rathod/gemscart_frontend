@@ -1,0 +1,51 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,10,0.6);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.2s ease;
+}
+
+.modal {
+  background: var(--ivory);
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slide-up 0.3s var(--ease-luxury);
+  position: relative;
+}
+
+.modal--sm { width: min(480px, 100%); }
+.modal--md { width: min(640px, 100%); }
+.modal--lg { width: min(900px, 100%); }
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-8);
+  border-bottom: var(--border-thin);
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+}
+
+.modal__close {
+  color: rgba(10,10,10,0.4);
+  transition: color var(--transition-base);
+}
+.modal__close:hover { color: var(--obsidian); }
+
+.modal__body {
+  padding: var(--space-8);
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }

@@ -1,0 +1,30 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.breadcrumb__item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb__sep {
+  color: rgba(10,10,10,0.3);
+  margin: 0 var(--space-2);
+}
+
+.breadcrumb__link {
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: rgba(10,10,10,0.5);
+  transition: color var(--transition-base);
+}
+.breadcrumb__link:hover { color: var(--gold); }
+
+.breadcrumb__current {
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: var(--obsidian);
+  font-weight: 500;
+}

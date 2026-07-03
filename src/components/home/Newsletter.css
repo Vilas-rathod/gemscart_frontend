@@ -1,0 +1,117 @@
+.newsletter {
+  position: relative;
+  padding: var(--space-20) 0;
+  overflow: hidden;
+  background: var(--ivory-dark);
+}
+
+.newsletter__bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.05) 0%, transparent 60%);
+}
+
+.newsletter__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.newsletter__eyebrow {
+  display: block;
+  color: var(--gold);
+  margin-bottom: var(--space-3);
+}
+
+.newsletter__title {
+  color: var(--obsidian);
+  margin-bottom: var(--space-4);
+}
+
+.newsletter__sub {
+  font-size: var(--text-sm);
+  color: rgba(10,10,10,0.55);
+  line-height: 1.8;
+}
+
+.newsletter__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.newsletter__field {
+  display: flex;
+  border: 1px solid rgba(10,10,10,0.2);
+  background: var(--white);
+}
+
+.newsletter__input {
+  flex: 1;
+  height: 54px;
+  padding: 0 var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--obsidian);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.newsletter__input::placeholder {
+  color: rgba(10,10,10,0.35);
+}
+
+.newsletter__btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-6);
+  background: var(--obsidian);
+  color: var(--white);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition-base);
+  white-space: nowrap;
+  height: 54px;
+  border: none;
+}
+
+.newsletter__btn:hover {
+  background: var(--gold);
+  color: var(--obsidian);
+}
+
+.newsletter__disclaimer {
+  font-size: 11px;
+  color: rgba(10,10,10,0.4);
+  line-height: 1.6;
+}
+
+.newsletter__success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  color: var(--success);
+}
+
+.newsletter__success p {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-style: italic;
+  color: var(--obsidian);
+}
+
+@media (max-width: 768px) {
+  .newsletter__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+}

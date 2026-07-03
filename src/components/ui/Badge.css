@@ -1,0 +1,18 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.badge--default   { background: var(--obsidian); color: var(--white); }
+.badge--gold      { background: var(--gold); color: var(--obsidian); }
+.badge--new       { background: var(--sage); color: var(--white); }
+.badge--sale      { background: var(--error); color: var(--white); }
+.badge--exclusive { background: var(--champagne); color: var(--obsidian); }
+.badge--limited   { background: var(--obsidian-60); color: var(--gold-light); border: 1px solid var(--gold); }

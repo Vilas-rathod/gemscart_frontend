@@ -1,0 +1,22 @@
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.rating__stars {
+  display: flex;
+  gap: 1px;
+}
+
+.rating--sm .rating__star { font-size: 12px; }
+.rating--md .rating__star { font-size: 16px; }
+.rating--lg .rating__star { font-size: 20px; }
+
+.rating__star { color: #ddd; }
+.rating__star.full, .rating__star.half { color: var(--gold); }
+
+.rating__count {
+  font-size: var(--text-xs);
+  color: rgba(10,10,10,0.5);
+}

@@ -1,0 +1,39 @@
+.announcement-bar {
+  background: var(--obsidian);
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 10px var(--space-8);
+  overflow: hidden;
+}
+
+.announcement-track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.announcement-text {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  font-weight: 400;
+}
+
+.announcement-close {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold-light);
+  opacity: 0.7;
+  transition: opacity var(--transition-base);
+  display: flex;
+  align-items: center;
+}
+
+.announcement-close:hover {
+  opacity: 1;
+}
