@@ -1,5 +1,5 @@
 .product-page {
-  padding-top: 72px;
+  padding-top: var(--header-height);
   padding-bottom: var(--space-16);
   min-height: 100vh;
 }

@@ -2,6 +2,16 @@
   min-height: 100vh;
 }
 
+.login-page__error {
+  background: #FDECEC;
+  color: #B42318;
+  border: 1px solid #F5C2C0;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
 .login-page__split {
   display: grid;
   grid-template-columns: 1fr 1fr;

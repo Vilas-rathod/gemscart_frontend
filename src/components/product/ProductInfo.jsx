@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Heart, ShoppingBag, Shield, Truck, RefreshCw, ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Heart, ShoppingBag, Zap, Shield, Truck, RefreshCw, ChevronDown } from 'lucide-react';
 import Rating from '../ui/Rating';
 import Badge from '../ui/Badge';
 import Button from '../common/Button';
 import { useCart } from '../../hooks/useCart';
 import { useWishlist } from '../../hooks/useWishlist';
+import { setBuyNow } from '../../utils/buyNow';
 import { formatPrice } from '../../utils/helpers';
 import './ProductInfo.css';
 
@@ -18,6 +20,7 @@ const ProductInfo = ({ product }) => {
   const [qty, setQty] = useState(1);
   const [adding, setAdding] = useState(false);
   const [openAccordion, setOpenAccordion] = useState('description');
+  const navigate = useNavigate();
   const { dispatch } = useCart();
   const { dispatch: wDispatch, isWishlisted } = useWishlist();
   const wishlisted = isWishlisted(product.id);
@@ -26,6 +29,12 @@ const ProductInfo = ({ product }) => {
     setAdding(true);
     dispatch({ type: 'ADD_ITEM', payload: { ...product, size: selectedSize, quantity: qty } });
     setTimeout(() => setAdding(false), 1000);
+  };
+
+  // "Order Now" — buy this item directly (COD), skipping the cart.
+  const handleOrderNow = () => {
+    setBuyNow({ ...product, size: selectedSize, quantity: qty });
+    navigate('/checkout');
   };
 
   const accordions = [
@@ -99,8 +108,8 @@ const ProductInfo = ({ product }) => {
 
       {/* CTAs */}
       <div className="product-info__ctas">
-        <Button variant="primary" size="lg" fullWidth loading={adding} onClick={handleAddToCart}>
-          <ShoppingBag size={16} /> Add to Bag
+        <Button variant="gold" size="lg" fullWidth onClick={handleOrderNow} disabled={!product.inStock}>
+          <Zap size={16} /> Order Now
         </Button>
         <button
           className={`product-info__wishlist-btn ${wishlisted ? 'active' : ''}`}
@@ -110,6 +119,12 @@ const ProductInfo = ({ product }) => {
           <Heart size={20} fill={wishlisted ? 'currentColor' : 'none'} />
         </button>
       </div>
+      <button className="product-info__add-secondary" onClick={handleAddToCart} disabled={adding || !product.inStock}>
+        <ShoppingBag size={15} /> {adding ? 'Added to Bag' : 'Add to Bag'}
+      </button>
+      <p className="product-info__cod-note">
+        <Truck size={13} /> Cash on Delivery available · Mobile-verified orders
+      </p>
 
       {/* Trust Badges */}
       <div className="product-info__trust">

@@ -1,0 +1,21 @@
+.pf-images { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.pf-thumb { position: relative; width: 72px; height: 72px; border-radius: 8px; overflow: hidden; border: 1px solid #e8e3d9; }
+.pf-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pf-thumb button {
+  position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(0,0,0,0.65); color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.pf-upload {
+  width: 72px; height: 72px; border-radius: 8px; border: 1px dashed #c9b98c;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  cursor: pointer; color: var(--gold-dark); font-size: 10px; background: rgba(201,168,76,0.06);
+}
+.pf-upload:hover { background: rgba(201,168,76,0.12); }
+.pf-url-row { display: flex; align-items: center; gap: 8px; color: #6b6b6b; }
+.pf-url-row .dash-input { flex: 1; }
+.pf-toggles { display: flex; gap: var(--space-6); font-size: var(--text-sm); }
+.pf-toggles label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.pf-toggles input { width: 16px; height: 16px; accent-color: var(--gold-dark); }
+.pf-spin { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

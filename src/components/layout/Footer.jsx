@@ -50,6 +50,7 @@ const Footer = () => (
           ['Size Guide', '/size-guide'],
           ['Certification & Purity', '/certification'],
           ['Gift Wrapping', '/gifts'],
+          ['Sell on LUXE', '/seller/apply'],
         ].map(([label, path]) => (
           <Link key={label} to={path} className="footer__link">{label}</Link>
         ))}

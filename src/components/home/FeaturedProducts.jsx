@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import ProductGrid from '../product/ProductGrid';
-import { products, testimonials } from '../../data/products';
+import * as productApi from '../../api/productApi';
+import { testimonials } from '../../data/products';
 import './FeaturedProducts.css';
 
 const FILTERS = ['All', 'Best Sellers', 'New Arrivals', 'Rings', 'Necklaces', 'Earrings'];
 
 const FeaturedProducts = () => {
   const [active, setActive] = useState('All');
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    productApi.getProducts({ page: 0, size: 100 })
+      .then(data => setProducts(data.items))
+      .catch(() => setProducts([]));
+  }, []);
 
   const filtered = products.filter(p => {
     if (active === 'All') return true;

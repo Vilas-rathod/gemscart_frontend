@@ -184,3 +184,13 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.product-card__cod-note {
+  display: block;
+  margin-top: 6px;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}

@@ -1,8 +1,16 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { categories } from '../../data/products';
+import * as productApi from '../../api/productApi';
 import './Categories.css';
 
-const Categories = () => (
+const Categories = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    productApi.getCategories().then(setCategories).catch(() => setCategories([]));
+  }, []);
+
+  return (
   <section className="categories section-pad">
     <div className="container">
       <div className="section-header">
@@ -32,6 +40,7 @@ const Categories = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default Categories;

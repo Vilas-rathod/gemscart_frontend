@@ -1,0 +1,186 @@
+.mobile-verify {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.mobile-verify__hero {
+  display: flex;
+  justify-content: center;
+  color: var(--gold);
+  margin-bottom: var(--space-4);
+}
+
+.mobile-verify__lead {
+  font-size: var(--text-sm);
+  color: rgba(10, 10, 10, 0.65);
+  line-height: 1.7;
+  margin-bottom: var(--space-5);
+}
+
+.mobile-verify__change {
+  background: none;
+  border: none;
+  color: var(--gold-dark);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: var(--space-2);
+}
+
+.mobile-verify__label {
+  display: block;
+  text-align: left;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.5);
+  margin-bottom: var(--space-2);
+}
+
+.mobile-verify__phone-field {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(10, 10, 10, 0.2);
+  transition: border-color var(--transition-base);
+}
+
+.mobile-verify__phone-field:focus-within {
+  border-color: var(--obsidian);
+}
+
+.mobile-verify__cc {
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+  color: rgba(10, 10, 10, 0.6);
+  border-right: 1px solid rgba(10, 10, 10, 0.15);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-verify__phone-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
+  letter-spacing: 0.14em;
+  color: var(--obsidian);
+}
+
+.mobile-verify__hint {
+  text-align: left;
+  font-size: var(--text-xs);
+  margin-top: var(--space-2);
+  color: rgba(10, 10, 10, 0.5);
+}
+
+.mobile-verify__hint--error { color: #B42318; }
+
+.mobile-verify__error {
+  font-size: var(--text-sm);
+  color: #B42318;
+  background: rgba(180, 35, 24, 0.06);
+  padding: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.mobile-verify__demo {
+  font-size: var(--text-xs);
+  color: var(--gold-dark);
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px dashed rgba(201, 168, 76, 0.5);
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-4);
+  line-height: 1.5;
+}
+
+.mobile-verify__demo span { opacity: 0.7; }
+
+.mobile-verify__cta { margin-top: var(--space-5); }
+
+/* ── OTP boxes ── */
+.otp-boxes {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 var(--space-3);
+}
+
+.otp-box {
+  width: 44px;
+  height: 52px;
+  text-align: center;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--obsidian);
+  border: 1px solid rgba(10, 10, 10, 0.2);
+  background: var(--white);
+  outline: none;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.otp-box:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.25);
+}
+
+.otp-box:disabled {
+  background: var(--ivory-dark);
+  opacity: 0.7;
+}
+
+.mobile-verify__timer {
+  font-size: var(--text-xs);
+  color: rgba(10, 10, 10, 0.5);
+  margin-bottom: var(--space-2);
+}
+
+.mobile-verify__timer--expired { color: #B42318; font-weight: 600; }
+
+.mobile-verify__resend {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background: none;
+  border: none;
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--gold-dark);
+  cursor: pointer;
+}
+
+.mobile-verify__resend:disabled {
+  color: rgba(10, 10, 10, 0.35);
+  cursor: not-allowed;
+}
+
+/* ── Done state ── */
+.mobile-verify__done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) 0;
+  color: var(--success, #2E7D32);
+}
+
+.mobile-verify__done h4 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  color: var(--obsidian);
+}
+
+.mobile-verify__done p {
+  font-size: var(--text-sm);
+  color: rgba(10, 10, 10, 0.6);
+}
+
+@media (max-width: 380px) {
+  .otp-box { width: 38px; height: 46px; }
+}

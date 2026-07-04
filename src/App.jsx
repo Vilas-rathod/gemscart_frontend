@@ -1,24 +1,25 @@
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './hooks/useCart';
 import { WishlistProvider } from './hooks/useWishlist';
-import AnnouncementBar from './components/layout/AnnouncementBar';
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import ScrollToTop from './components/layout/ScrollToTop';
+import { ToastProvider } from './components/dashboard/ToastProvider';
+import { ConfirmProvider } from './components/dashboard/ConfirmProvider';
 import AppRoutes from './routes/AppRoutes';
 import './styles/globals.css';
 
 const App = () => (
   <BrowserRouter>
-    <CartProvider>
-      <WishlistProvider>
-        <ScrollToTop />
-        <AnnouncementBar />
-        <Navbar />
-        <AppRoutes />
-        <Footer />
-      </WishlistProvider>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <WishlistProvider>
+          <ToastProvider>
+            <ConfirmProvider>
+              <AppRoutes />
+            </ConfirmProvider>
+          </ToastProvider>
+        </WishlistProvider>
+      </CartProvider>
+    </AuthProvider>
   </BrowserRouter>
 );
 

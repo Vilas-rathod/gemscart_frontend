@@ -1,9 +1,5 @@
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  position: relative;
   transition: background var(--transition-base), box-shadow var(--transition-base), padding var(--transition-base);
   padding: 0;
 }
@@ -191,24 +187,73 @@
   left: 0;
   bottom: 0;
   width: min(320px, 85vw);
+  max-width: 100vw;
   background: var(--ivory);
   z-index: 1100;
   transform: translateX(-100%);
-  transition: transform var(--transition-slow);
+  transition: transform var(--transition-slow), visibility var(--transition-slow);
   display: flex;
   flex-direction: column;
-  padding-top: 80px;
   box-shadow: var(--shadow-lg);
+  /* Fully removed from the layout/interaction when closed so it can never
+     overlap page content or capture taps/focus while off-screen. */
+  visibility: hidden;
+  overscroll-behavior: contain;
 }
 
 .navbar__mobile-drawer.open {
   transform: translateX(0);
+  visibility: visible;
+}
+
+.navbar__mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--navbar-height);
+  flex-shrink: 0;
+  padding: 0 var(--space-5) 0 var(--space-6);
+  border-bottom: var(--border-thin);
+}
+
+.navbar__mobile-logo-word {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--obsidian);
+}
+
+.navbar__mobile-logo-sub {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-top: -2px;
+}
+
+.navbar__mobile-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  color: var(--obsidian);
+  border-radius: var(--radius-full);
+  transition: color var(--transition-base), background var(--transition-base);
+}
+
+.navbar__mobile-close:hover {
+  color: var(--gold-dark);
+  background: rgba(201,168,76,0.08);
 }
 
 .navbar__mobile-inner {
   display: flex;
   flex-direction: column;
-  padding: var(--space-4) var(--space-6);
+  padding: var(--space-4) var(--space-6) var(--space-8);
   overflow-y: auto;
 }
 
@@ -222,9 +267,20 @@
   transition: color var(--transition-base), padding-left var(--transition-base);
 }
 
-.navbar__mobile-link:hover {
-  color: var(--gold);
+.navbar__mobile-link:hover,
+.navbar__mobile-link.active {
+  color: var(--gold-dark);
   padding-left: var(--space-2);
+}
+
+/* Sign-out rendered as a button, styled to match the nav links */
+.navbar__mobile-link--btn {
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--ivory-dark);
+  cursor: pointer;
+  width: 100%;
 }
 
 .navbar__mobile-divider {
@@ -240,6 +296,23 @@
   background: rgba(10,10,10,0.5);
   z-index: 1050;
   backdrop-filter: blur(3px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.navbar__backdrop.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__mobile-drawer,
+  .navbar__backdrop {
+    transition: none;
+  }
 }
 
 /* ── Search Overlay ── */

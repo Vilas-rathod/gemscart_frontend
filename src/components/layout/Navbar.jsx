@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Search, Heart, ShoppingBag, Menu, X, User } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
 import { useWishlist } from '../../hooks/useWishlist';
+import { useAuth } from '../../context/AuthContext';
 import { navLinks } from '../../data/products';
 import './Navbar.css';
 
@@ -13,7 +14,18 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { itemCount } = useCart();
   const { items: wishlistItems } = useWishlist();
+  const { isAuthenticated, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const closeMobile = useCallback(() => setMobileOpen(false), []);
+
+  const handleSignOut = useCallback(() => {
+    closeMobile();
+    logout();
+    // Replace history so the Back button can't return to a protected page.
+    navigate('/', { replace: true });
+  }, [closeMobile, logout, navigate]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -34,7 +46,7 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
 
   return (
-    <header className={`navbar ${scrolled || !isHome ? 'navbar--scrolled' : ''} ${mobileOpen ? 'navbar--open' : ''}`}>
+    <header className={`navbar ${scrolled || !isHome ? 'navbar--scrolled' : ''}`}>
       {/* ── Search Overlay ── */}
       {searchOpen && (
         <div className="search-overlay">
@@ -85,7 +97,7 @@ const Navbar = () => {
           <button className="navbar__icon-btn" onClick={() => setSearchOpen(true)} aria-label="Search">
             <Search size={20} />
           </button>
-          <Link to="/profile" className="navbar__icon-btn" aria-label="Account">
+          <Link to={isAuthenticated ? '/profile' : '/login'} className="navbar__icon-btn" aria-label="Account">
             <User size={20} />
           </Link>
           <Link to="/wishlist" className="navbar__icon-btn" aria-label="Wishlist">
@@ -100,22 +112,45 @@ const Navbar = () => {
       </div>
 
       {/* ── Mobile Drawer ── */}
-      <div className={`navbar__mobile-drawer ${mobileOpen ? 'open' : ''}`}>
+      <div
+        className={`navbar__mobile-drawer ${mobileOpen ? 'open' : ''}`}
+        aria-hidden={!mobileOpen}
+      >
+        <div className="navbar__mobile-header">
+          <Link to="/" className="navbar__logo" onClick={closeMobile}>
+            <span className="navbar__mobile-logo-word">LUXE</span>
+            <span className="navbar__mobile-logo-sub">Jewellery</span>
+          </Link>
+          <button className="navbar__mobile-close" onClick={closeMobile} aria-label="Close menu">
+            <X size={22} />
+          </button>
+        </div>
         <div className="navbar__mobile-inner">
           {navLinks.map(link => (
-            <NavLink key={link.label} to={link.path} className="navbar__mobile-link">
+            <NavLink key={link.label} to={link.path} className="navbar__mobile-link" onClick={closeMobile}>
               {link.label}
             </NavLink>
           ))}
           <div className="navbar__mobile-divider" />
-          <NavLink to="/login" className="navbar__mobile-link">Login / Register</NavLink>
-          <NavLink to="/wishlist" className="navbar__mobile-link">Wishlist ({wishlistItems.length})</NavLink>
-          <NavLink to="/cart" className="navbar__mobile-link">Cart ({itemCount})</NavLink>
+          {isAuthenticated ? (
+            <>
+              <NavLink to="/profile" className="navbar__mobile-link" onClick={closeMobile}>My Account</NavLink>
+              <button type="button" className="navbar__mobile-link navbar__mobile-link--btn" onClick={handleSignOut}>Sign Out</button>
+            </>
+          ) : (
+            <NavLink to="/login" className="navbar__mobile-link" onClick={closeMobile}>Login / Register</NavLink>
+          )}
+          <NavLink to="/wishlist" className="navbar__mobile-link" onClick={closeMobile}>Wishlist ({wishlistItems.length})</NavLink>
+          <NavLink to="/cart" className="navbar__mobile-link" onClick={closeMobile}>Cart ({itemCount})</NavLink>
         </div>
       </div>
 
       {/* ── Mobile Backdrop ── */}
-      {mobileOpen && <div className="navbar__backdrop" onClick={() => setMobileOpen(false)} />}
+      <div
+        className={`navbar__backdrop ${mobileOpen ? 'open' : ''}`}
+        onClick={closeMobile}
+        aria-hidden="true"
+      />
     </header>
   );
 };

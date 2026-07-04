@@ -1,16 +1,50 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ProductGallery from '../components/product/ProductGallery';
 import ProductInfo from '../components/product/ProductInfo';
 import ProductGrid from '../components/product/ProductGrid';
 import Breadcrumb from '../components/ui/Breadcrumb';
-import { products, categories } from '../data/products';
+import * as productApi from '../api/productApi';
+import { track, ACTIVITY } from '../api/activityApi';
 import './Product.css';
 
 const Product = () => {
   const { slug } = useParams();
-  const product = products.find(p => p.slug === slug);
+  const [product, setProduct] = useState(null);
+  const [related, setRelated] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  if (!product) {
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setNotFound(false);
+
+    productApi.getProductBySlug(slug)
+      .then(data => {
+        if (cancelled) return;
+        setProduct(data);
+        track(ACTIVITY.PRODUCT_VIEW, slug);
+        return productApi.getRelatedProducts(slug, 4);
+      })
+      .then(relatedData => {
+        if (!cancelled && relatedData) setRelated(relatedData);
+      })
+      .catch(() => {
+        if (!cancelled) setNotFound(true);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  if (loading) {
+    return <div className="product-not-found"><h2 className="display-md">Loading…</h2></div>;
+  }
+
+  if (notFound || !product) {
     return (
       <div className="product-not-found">
         <h2 className="display-md">Product not found</h2>
@@ -19,9 +53,6 @@ const Product = () => {
     );
   }
 
-  const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
-  const cat = categories.find(c => c.slug === product.category);
-
   return (
     <main className="product-page">
       <div className="container">
@@ -29,7 +60,7 @@ const Product = () => {
           <Breadcrumb items={[
             { label: 'Home', path: '/' },
             { label: 'Shop', path: '/shop' },
-            { label: cat?.name || product.category, path: `/shop?category=${product.category}` },
+            { label: product.category.replace(/-/g, ' '), path: `/shop?category=${product.category}` },
             { label: product.name }
           ]} />
         </div>

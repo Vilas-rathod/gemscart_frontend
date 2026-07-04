@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Heart, ShoppingBag, Eye } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Heart, Zap, Eye } from 'lucide-react';
 import Rating from '../ui/Rating';
 import Badge from '../ui/Badge';
-import { useCart } from '../../hooks/useCart';
 import { useWishlist } from '../../hooks/useWishlist';
+import { setBuyNow } from '../../utils/buyNow';
 import { formatPrice } from '../../utils/helpers';
 import './ProductCard.css';
 
@@ -19,16 +19,15 @@ const BADGE_VARIANT_MAP = {
 
 const ProductCard = ({ product }) => {
   const [imgIndex, setImgIndex] = useState(0);
-  const [adding, setAdding] = useState(false);
-  const { dispatch } = useCart();
+  const navigate = useNavigate();
   const { dispatch: wDispatch, isWishlisted } = useWishlist();
   const wishlisted = isWishlisted(product.id);
 
-  const handleAddToCart = (e) => {
+  // "Order Now" — buy this item directly (COD), skipping the cart.
+  const handleOrderNow = (e) => {
     e.preventDefault();
-    setAdding(true);
-    dispatch({ type: 'ADD_ITEM', payload: { ...product, size: product.sizes?.[0] || '' } });
-    setTimeout(() => setAdding(false), 900);
+    setBuyNow({ ...product, size: product.sizes?.[0] || '', quantity: 1 });
+    navigate('/checkout');
   };
 
   const handleWishlist = (e) => {
@@ -91,13 +90,14 @@ const ProductCard = ({ product }) => {
         </div>
 
         <button
-          className={`product-card__add-btn ${adding ? 'adding' : ''}`}
-          onClick={handleAddToCart}
+          className="product-card__add-btn"
+          onClick={handleOrderNow}
           disabled={!product.inStock}
         >
-          <ShoppingBag size={14} />
-          {!product.inStock ? 'Out of Stock' : adding ? 'Added!' : 'Add to Bag'}
+          <Zap size={14} />
+          {!product.inStock ? 'Out of Stock' : 'Order Now'}
         </button>
+        {product.inStock && <span className="product-card__cod-note">Cash on Delivery available</span>}
       </div>
     </article>
   );
